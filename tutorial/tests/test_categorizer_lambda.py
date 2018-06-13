@@ -15,8 +15,8 @@ def modelstorage():
 
 @pytest.fixture()
 def model():
-    vec = joblib.load(pkg_resources.resource_filename(__name__, "../models/tfidf_vectorizer.pkl"))
-    clf = joblib.load(pkg_resources.resource_filename(__name__, "../models/naive_bayes_clf.pkl"))
+    vec = joblib.load(pkg_resources.resource_filename(__name__, "../training/models/tfidf_vectorizer.pkl"))
+    clf = joblib.load(pkg_resources.resource_filename(__name__, "../training/models/naive_bayes_clf.pkl"))
     return MyModel(vectorizer=vec, classifier=clf)
 
 

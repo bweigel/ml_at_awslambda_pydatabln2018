@@ -1,4 +1,4 @@
-# Deploying ML-models to AWS lambda @ Workshop PyData Berlin 2018
+# Deploying ML-models to AWS lambda @ Workshop PyData Berlin 2018 (WIP)
 
 ### What you will need (and should already have installed)
 
@@ -17,3 +17,28 @@
     - `aws configure` (see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html))
 2. create an s3 bucket, where you want serverless to deploy your code (`aws s3api create-bucket --acl private --bucket <your_bucket_name>`)
 3. 
+
+TODO
+
+### Things that can be optimized
+
+*Exclude stuff from libraries to reduce the size of the deployment package*:
+
+1. **pandas** (57 MB total):
+    - 32 MB of `test` code means 57 MB down to 25 MB (-56%)
+2. **sklearn** (47 MB total):
+    - 1.6 MB of `datasets` code (-3.4%)
+    - 4.5 MB of `tests` code (-9.6%)
+3. **numpy** (57 MB total):
+    - 1.4 MB of `distutils` code(-3%)
+    - 5.8 MB of `tests` code (-10%)
+    - **DO NOT** remove `numpy.testing`
+4. **scipy** (117 MB total):
+    - 13.3 MB of `tests` code (-11.3%)
+    
+*Byte compile everything*:
+
+1. byte-compile (inside lambda dockedr container) `python -m compileall .`
+2. copy `*.pyc` files from `__pycache__` to top-level directory: `find . -type f -name '*.pyc' | while read f; do n=$(echo $f | sed 's/__pycache__\///' | sed 's/.cpython-36//'); cp $f $n; done;`
+3. remove `__pycache__` directories: `find . -type d -a -name '__pycache__' | xargs rm -rf`
+3. remove `*.py` files: `find . -type f -name '*.py' | xargs rm`

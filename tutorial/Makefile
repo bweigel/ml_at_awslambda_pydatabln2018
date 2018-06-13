@@ -80,6 +80,9 @@ setup: create-venv ## setup serverless (node) and create a .venv
 	set -eux pipefail
 	npm install
 
+deploy-model: ## deploy model to s3
+	./training/deploy_model.sh
+
 deploy: ## deploy serverless project to dev
 	./node_modules/serverless/bin/serverless deploy --stage=$(STAGE)
 

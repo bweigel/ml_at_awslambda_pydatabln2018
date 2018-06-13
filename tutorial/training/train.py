@@ -22,7 +22,7 @@ data_train, data_test, labels_train, labels_test = train_test_split(
 vectorizer = TfidfVectorizer(sublinear_tf=True, max_df=0.5)
 vectorizer.fit(data_train)
 
-joblib.dump(vectorizer, 'tfidf_vectorizer.pkl')
+joblib.dump(vectorizer, './models/tfidf_vectorizer.pkl')
 
 """
 Train Naive Bayes Classifier
@@ -33,7 +33,7 @@ data_train_transformed = vectorizer.transform(data_train).toarray()
 clf = GaussianNB()
 clf.fit(data_train_transformed, labels_train)
 
-joblib.dump(clf, 'naive_bayes_clf.pkl')
+joblib.dump(clf, './models/naive_bayes_clf.pkl')
 
 """
 Test Model

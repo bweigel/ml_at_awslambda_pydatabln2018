@@ -1,3 +1,4 @@
+import pkg_resources
 import pytest
 from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -14,8 +15,8 @@ def modelstorage():
 
 @pytest.fixture()
 def model():
-    vec = joblib.load("../models/tfidf_vectorizer.pkl")
-    clf = joblib.load("../models/naive_bayes_clf.pkl")
+    vec = joblib.load(pkg_resources.resource_filename(__name__, "../models/tfidf_vectorizer.pkl"))
+    clf = joblib.load(pkg_resources.resource_filename(__name__, "../models/naive_bayes_clf.pkl"))
     return MyModel(vectorizer=vec, classifier=clf)
 
 

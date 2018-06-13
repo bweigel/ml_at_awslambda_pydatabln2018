@@ -1,5 +1,3 @@
-"""Tests for `tutorial` package."""
-
 import pytest
 from sklearn.externals import joblib
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -10,13 +8,13 @@ from categorizer_lambda.util import get_model, MyModel, predict
 
 @pytest.fixture()
 def modelstorage():
-    return ("dreigelb.public", ("pydatabln2018/tdidf_vectorizer.pkl",
+    return ("dreigelb.public", ("pydatabln2018/tfidf_vectorizer.pkl",
                                 "pydatabln2018/naive_bayes_clf.pkl"))
 
 
 @pytest.fixture()
 def model():
-    vec = joblib.load("../models/tdidf_vectorizer.pkl")
+    vec = joblib.load("../models/tfidf_vectorizer.pkl")
     clf = joblib.load("../models/naive_bayes_clf.pkl")
     return MyModel(vectorizer=vec, classifier=clf)
 

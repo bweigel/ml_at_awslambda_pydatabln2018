@@ -1,0 +1,98 @@
+service:
+  name: pydatabln2018-ws-ml-to-lambda
+
+plugins:
+  - serverless-python-requirements
+  - serverless-plugin-tracing
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: eu-central-1
+
+  profile: ${opt:profile, "default"}
+  role: DeployingMLtoLambdaRole
+  memorySize: 256
+  timeout: 10
+  tracing: true
+  deploymentBucket:
+    name: eigelb.projects
+  stackTags:
+    service: ${ self:service }
+
+package:
+  exclude:
+    - '**/*'
+  include:
+    - '*_lambda/**/*.py'
+    - '*_lambda/**/*.json'
+
+custom:
+  pythonRequirements:
+    dockerizePip: 'true'
+    fileName: Pipfile
+    dockerUsePipenv: true
+    dockerFile: Dockerfile
+  git-repo: https://github.com/bweigel/ml_at_awslambda_pydatabln2018
+
+functions:
+  categorizer_lambda:
+    name: categorizer_lambda
+    description: >
+      categorize texts into spam or ham using a naive Bayes classifier
+    handler: categorizer_lambda.main.lambda_handler
+    events:
+      - http:
+          path: spamorham
+          method: POST
+    environment:
+      MODEL_BUCKET: dreigelb.public
+      MODEL_VECTORIZER_PATH: pydatabln2018/tfidf_vectorizer.pkl
+      MODEL_CLASSIFIER_PATH: pydatabln2018/naive_bayes_clf.pkl
+
+
+resources:
+  Resources:
+    DeployingMLtoLambdaRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /service/
+        RoleName: pydatabln2018-ws-ml-to-lambda-role
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: pydatabln2018-ws-ml-to-lambda-policy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource:
+                    - 'Fn::Join': [':', ['arn:aws:logs', Ref: 'AWS::Region', Ref: AWS::AccountId, 'log-group:/aws/lambda/*:*:*']]
+                -  Effect: Allow
+                   Action:
+                     - s3:PutObject
+                   Resource:
+                       - "arn:aws:s3:::${self:provider.deploymentBucket}/*"
+                # Add permissions to S3 for the Lambda to retrieve the models
+                -  Effect: Allow
+                   Action:
+                     - s3:GetObject
+                   Resource:
+                       - "arn:aws:s3:::dreigelb.public/*"
+                - Effect: Allow
+                  Action:
+                    - "xray:PutTraceSegments"
+                    - "xray:PutTelemetryRecords"
+                  Resource:
+                    - "*"
+

@@ -1,0 +1,20 @@
+{
+  "name": "tutorial",
+  "version": "1.0.0",
+  "description": "Demo project to illustrate deployment of ML-models to AWS lambdas",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bweigel/tutorial"
+  },
+  "author": "Benjamin Weigel",
+  "license": "MIT license",
+  "bugs": {
+    "url": "https://github.com/bweigel/tutorial/issues"
+  },
+  "homepage": "https://github.com/bweigel/tutorial#readme",
+  "devDependencies": {
+    "serverless": "^1.27.3",
+    "serverless-plugin-tracing": "^2.0.0",
+    "serverless-python-requirements": "^3.0.7"
+  }
+}

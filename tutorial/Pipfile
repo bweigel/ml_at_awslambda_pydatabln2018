@@ -1,0 +1,25 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+
+
+[dev-packages]
+
+bumpversion = "*"
+wheel = "*"
+watchdog = "*"
+"flake8" = "*"
+tox = "*"
+coverage = "*"
+pytest = "*"
+pytest-runner = "*"
+twine = "*"
+"boto3" = "*"
+pyminifier = "*"
+
+
+[packages]
+
+sklearn = "*"
+scipy = "*"

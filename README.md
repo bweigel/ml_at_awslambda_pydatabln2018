@@ -9,13 +9,13 @@
 **PyData Attendees**, since I am not sure how well the internet will work on the Charité premises I urge you to 
 please install the above software and:
 - download the aws-lambda python 3.6 docker image: `docker pull lambci/lambda:build-python3.6`.
-- do items **1** to **4** in the **Quickstart** below
+- do items **1** to **4** in the **[Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart-minimal-devops-overhead)** below
 
 -----------------------------------------------------------------------------------
 
 ### Intro
 
-In this Workshop you will be using the [Serverless Framework][serveless] to deploy a pre-trained model (Naive Bayes Classifier) 
+In this Workshop you will be using the [Serverless] Framework to deploy a pre-trained model (Naive Bayes Classifier) 
 based on the [SMS Spam Collection dataset](https://www.kaggle.com/uciml/sms-spam-collection-dataset/version/1) to the cloud.
 The training was carried out like it is described [here](https://www.kaggle.com/mzsrtgzr2/naive-bayes-classifier-spam-ham).
 
@@ -54,10 +54,10 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
         upload: training/models/tfidf_vectorizer.pkl to s3://eigelbdemo/pydatabln2018/tfidf_vectorizer.pkl
         ```
 5. find the `TODOs` in the `serverless.yml` and fill in the bucket specified in **5** and the path to the classifiers:
-    ![](./resources/serverless_todo1.png) 
-    ![](./resources/serverless_todo2.png) 
+    ![](./resources/serverless_todo1.png | width=472) 
+    ![](./resources/serverless_todo2.png | width=1168) 
 6. deploy your service to AWS using `make deploy`
-    ![](./resources/serverless_deployment.png)
+    ![](./resources/serverless_deployment.png | width=727)
 7. test your service (take url from `make deploy` output):
      ```
      $ curl -X POST https://vmrabekuo4.execute-api.eu-central-1.amazonaws.com/dev/spamorham -w "\n" -d "Am I spam or am I ham?" 
@@ -81,12 +81,14 @@ TODO
 All the ML frameworks in Python are quite heavy weight when it comes to size. However for individual lambda deployments 
 (not as part of a cloudformation stack) there is a hard filesize limit of 50 MB enforced by AWS. This is not only because AWS 
 wants to srew with you, but because it wants developers to build apps with the highest performance.
-There are a couple of tricks to reduce the size of your deployment zip-file. See below and the resources section for more info.
+There are a couple of tricks to reduce the size of your deployment zip-file. See below and the [resources section](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#resources) for more info.
 
 If you deploy your function as part of a cloudformation stack (which the serverless framework does by default) this limit
 goes up to about 250 MB of ___unzipped___ code. I am not exactly sure what that means for the zip-file, but it is well above 50 MB.
 
 ### Things that can be optimized
+
+#### Omit 3rd tests for deployment
 
 Most libraries come bundled with their test-code, when installed. This test code might amount to up to 10% of the size of the package.
 However 3rd party test code will be rarely needed in production environments, so one can get rid of the tests.
@@ -106,7 +108,9 @@ Also some packages provide their own datasets, which are quite useful for learni
 4. **scipy** (117 MB total):
     - 13.3 MB of `tests` code (-11.3%)
     
-Another quite useful tip that I picked up from [this][1] blogpost is to bytecompile everything and then ship it.
+#### Bytecompile `*.py` to `*.pyc` to save space
+    
+Another quite useful tip that I picked up from [this blogpost][1] is to bytecompile everything and then ship it.
 
 *Example workflow to byte compile everything*:
 
@@ -119,8 +123,9 @@ runtime environment (e.g. this docker image `lambci/lambda:build-python3.6`).
 3. remove `*.py` files: `find . -type f -name '*.py' | xargs rm`
 
 
-#### Resources
+## Resources
 
-- [1]: AWS Lambda Python magic. Tips for creating powerful Lambda functions. https://blog.mapbox.com/aws-lambda-python-magic-e0f6a407ffc6
+- [AWS Lambda Python magic. Tips for creating powerful Lambda functions.][1] 
 
-[serverless]: https://serverless.com/framework/
+[1]: https://blog.mapbox.com/aws-lambda-python-magic-e0f6a407ffc6
+[Serverless]: https://serverless.com/framework/

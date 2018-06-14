@@ -1,4 +1,4 @@
-# Deploying ML-models to AWS lambda @ Workshop PyData Berlin 2018 (WIP)
+# Deploying ML-models to AWS lambda - Workshop @ PyData Berlin 2018 (WIP)
 
 ### What you will need (and should already have installed)
 
@@ -6,8 +6,9 @@
 - [node.js](https://nodejs.org/en/) (>=8.0) & NPM
 - [Docker](https://www.docker.com/community-edition)
 
+### Quickstart (minimal DevOps overhead)
 
-1. create AWS account at [https://aws.amazon.com](https://aws.amazon.com) if you have not already done so (see [Instruction](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/))
+1. create an AWS account at [https://aws.amazon.com](https://aws.amazon.com) if you have not already done so (see [Instruction](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/))
     - you will need a credit card to do this, but you __will not be charged__ if you stay in the [free tier](https://aws.amazon.com/free/)
     - *Beware:* the S3 capabilities, that we will be using, will only be free of charge for the first 12 months!
     - [create a new user within IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) (do not use root user to do stuff in your account and be sure to use MFA and a secure password)
@@ -15,10 +16,33 @@
 2. install and setup the [AWS Command Line Interface](https://aws.amazon.com/cli/)
     - `pip install awscli`
     - `aws configure` (see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html))
-2. create an s3 bucket, where you want serverless to deploy your code (`aws s3api create-bucket --acl private --bucket <your_bucket_name>`)
-3. 
+3. create an s3 bucket to hold your serialized (pickled) models and the lambda code
+    - use the cli `aws s3api create-bucket --acl private --bucket <your_deployment_bucket_name>` or the [S3 Management Console](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html)   
+    - **BEWARE** S3-bucket names must be globally unique!
+4. clone this repo `git clone https://github.com/bweigel/ml_at_awslambda_pydatabln2018.git` 
+    - and change into the `tutorial` folder `cd ml_at_awslambda_pydatabln2018/tutorial`
+6. upload the provided models in `training/models` using `make deploy-model`
+    - this will prompt you to enter the bucket name from **3** and an object prefix (think of it as a folder name)
+    - the output tells you what has been uploaded:
+        ```bash
+        $ make deploy-model
+        ./training/deploy_model.sh
+        Enter bucket name: dreigelb.public
+        Enter object prefix: pydatabln2018
+        + aws s3 cp --recursive ./training/models s3://dreigelb.public/pydatabln2018/
+        upload: training/models/naive_bayes_clf.pkl to s3://dreigelb.public/pydatabln2018/naive_bayes_clf.pkl
+        upload: training/models/tfidf_vectorizer.pkl to s3://dreigelb.public/pydatabln2018/tfidf_vectorizer.pkl
+        ```
+5. find the `TODOs` in the `serverless.yml` and fill in the buckets specified in **3** and the path to the classifiers:
+    ![](./resources/serverless_todo1.png) 
+    ![](./resources/serverless_todo2.png) 
+6. deploy your service to AWS using `make deploy`
 
 TODO
+
+
+-------------------------------------------------------------------------------
+
 
 ### Things that can be optimized
 

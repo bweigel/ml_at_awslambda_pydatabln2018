@@ -18,7 +18,7 @@ provider:
 
   ## TODO: Edit this to setup your deployment bucket
   deploymentBucket:
-    name: eigelb.projects
+    name: dreigelb.public
 
   stackTags:
     service: ${ self:service }
@@ -49,8 +49,8 @@ functions:
           path: spamorham
           method: POST
     environment:
+      MODEL_BUCKET: ${self:provider.deploymentBucket}
       ## TODO: Edit these environmental variables to tell your code where the model is deployed (see ./categorizer_lambda/main.py)
-      MODEL_BUCKET: dreigelb.public
       MODEL_VECTORIZER_PATH: pydatabln2018/tfidf_vectorizer.pkl
       MODEL_CLASSIFIER_PATH: pydatabln2018/naive_bayes_clf.pkl
 
@@ -91,12 +91,7 @@ resources:
                 -  Effect: Allow
                    Action:
                      - s3:PutObject
-                   Resource:
-                       - "arn:aws:s3:::${self:provider.deploymentBucket}/*"
-                -  Effect: Allow
-                   Action:
                      - s3:GetObject
                    Resource:
-                      ## TODO: Add permissions to your model bucket for the Lambda to retrieve the models
-                       - "arn:aws:s3:::dreigelb.public/*"
+                       - "arn:aws:s3:::${self:provider.deploymentBucket}/*"
 

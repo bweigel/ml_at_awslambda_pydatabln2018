@@ -89,4 +89,5 @@ deploy: ## deploy serverless project to dev
 remove: ## remove the stack deployed with serverless
 	./node_modules/serverless/bin/serverless remove --stage=$(STAGE)
 
-
+bucket:
+	read -p "Enter bucket name: " BUCKET &&	aws s3api create-bucket --acl private --bucket $$BUCKET --create-bucket-configuration LocationConstraint=eu-central-1

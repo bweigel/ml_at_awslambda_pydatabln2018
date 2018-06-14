@@ -6,6 +6,24 @@
 - [node.js](https://nodejs.org/en/) (>=8.0) & NPM
 - [Docker](https://www.docker.com/community-edition)
 
+**PyData Attendees**, since I am not sure how well the internet will work on the Charité premises I urge you to 
+please install the above software and:
+- download the aws-lambda python 3.6 docker image: `docker pull lambci/lambda:build-python3.6`.
+- do items **1** to **4** in the **Quickstart** below
+
+-----------------------------------------------------------------------------------
+
+### Intro
+
+In this Workshop you will be using the [Serverless Framework][serveless] to deploy a pre-trained model (Naive Bayes Classifier) 
+based on the [SMS Spam Collection dataset](https://www.kaggle.com/uciml/sms-spam-collection-dataset/version/1) to the cloud.
+The training was carried out like it is described [here](https://www.kaggle.com/mzsrtgzr2/naive-bayes-classifier-spam-ham).
+
+Your cloud-service will use AWS Lambda and Api-Gateway behind the scenes.
+AWS Api-Gateway will provide a API endpoint where texts can be classified using the `POST` method with the text as payload.
+The payloads will be forwarded to a AWS lambda function that knows the model and does the actual classification. 
+
+
 ### Quickstart (minimal DevOps overhead)
 
 1. create an AWS account at [https://aws.amazon.com](https://aws.amazon.com) if you have not already done so (see [Instruction](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/))
@@ -103,4 +121,6 @@ runtime environment (e.g. this docker image `lambci/lambda:build-python3.6`).
 
 #### Resources
 
-[1]: AWS Lambda Python magic. Tips for creating powerful Lambda functions. https://blog.mapbox.com/aws-lambda-python-magic-e0f6a407ffc6
+- [1]: AWS Lambda Python magic. Tips for creating powerful Lambda functions. https://blog.mapbox.com/aws-lambda-python-magic-e0f6a407ffc6
+
+[serverless]: https://serverless.com/framework/

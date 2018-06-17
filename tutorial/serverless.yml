@@ -12,13 +12,13 @@ provider:
 
   profile: ${opt:profile, "default"}
   role: DeployingMLtoLambdaRole
-  memorySize: 256
-  timeout: 10
+  memorySize: 1024
+  timeout: 30
   tracing: true
 
   ## TODO: Edit this to setup your deployment bucket
   deploymentBucket:
-    name: eigelbdemo
+    name: ep.dev.projects
 
   stackTags:
     service: ${ self:service }
@@ -31,16 +31,23 @@ package:
     - 'categorizer_lambda/**'
 
 custom:
+  stage: ${ opt:stage, "dev" }
+  slimify:
+    slim: true
+    fat: false
+    zip: false
   pythonRequirements:
     dockerizePip: 'true'
     fileName: Pipfile
     dockerUsePipenv: true
+    zip: true
+    slim: ${ self:custom.stage }
     dockerFile: Dockerfile
   git-repo: https://github.com/bweigel/ml_at_awslambda_pydatabln2018
 
 functions:
   categorizer_lambda:
-    name: categorizer_lambda
+    name: categorizer_lambda_${ self:custom.stage }
     description: >
       categorize texts into spam or ham using a naive Bayes classifier
     handler: categorizer_lambda.main.lambda_handler
@@ -61,7 +68,7 @@ resources:
       Type: AWS::IAM::Role
       Properties:
         Path: /service/
-        RoleName: pydatabln2018-ws-ml-to-lambda-role
+        RoleName: pydatabln2018-ws-ml-to-lambda_${ self:custom.stage }-role
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -71,7 +78,7 @@ resources:
                   - lambda.amazonaws.com
               Action: sts:AssumeRole
         Policies:
-          - PolicyName: pydatabln2018-ws-ml-to-lambda-policy
+          - PolicyName: pydatabln2018-ws-ml-to-lambda_${ self:custom.stage }-policy
             PolicyDocument:
               Version: '2012-10-17'
               Statement:

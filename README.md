@@ -54,10 +54,10 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
         upload: training/models/tfidf_vectorizer.pkl to s3://eigelbdemo/pydatabln2018/tfidf_vectorizer.pkl
         ```
 5. find the `TODOs` in the `serverless.yml` and fill in the bucket specified in **5** and the path to the classifiers:
-    ![](./resources/serverless_todo1.png){:width="472px"}  
-    ![](./resources/serverless_todo2.png){:width="1168px"} 
+    ![](./resources/serverless_todo1.png)
+    ![](./resources/serverless_todo2.png)
 6. deploy your service to AWS using `make deploy`
-    ![](./resources/serverless_deployment.png){:width="727px"} 
+    ![](./resources/serverless_deployment.png)
 7. test your service (take url from `make deploy` output):
      ```
      $ curl -X POST https://vmrabekuo4.execute-api.eu-central-1.amazonaws.com/dev/spamorham -w "\n" -d "Am I spam or am I ham?" 

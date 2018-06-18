@@ -36,8 +36,8 @@ clean: clean-build clean-pyc clean-test clean-tooling ## remove all build, test,
 clean-tooling: ## removes node_modules and .venv
 	rm -rf node_modules/
 	rm -rf .venv/
-	rm Pipfile.lock
-	rm package-lock.json
+	rm -f Pipfile.lock
+	rm -f package-lock.json
 
 clean-build: ## remove build artifacts
 	rm -fr build/

@@ -1,6 +1,7 @@
 .PHONY: clean clean-test clean-pyc clean-build clean-tooling help
 .DEFAULT_GOAL := help
 STAGE=dev
+PROFILE=default
 
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
@@ -35,6 +36,8 @@ clean: clean-build clean-pyc clean-test clean-tooling ## remove all build, test,
 clean-tooling: ## removes node_modules and .venv
 	rm -rf node_modules/
 	rm -rf .venv/
+	rm Pipfile.lock
+	rm package-lock.json
 
 clean-build: ## remove build artifacts
 	rm -fr build/
@@ -59,7 +62,7 @@ lint: ## check style with flake8
 	flake8 tutorial tests
 
 test: ## run tests quickly with the default Python
-	py.test -v
+	PYTHONPATH=$(pwd):$$PYTHONPATH pipenv run py.test -v
 
 test-all: create-venv ## run tests on every Python version with tox
 	pipenv run tox
@@ -73,7 +76,7 @@ coverage: ## check code coverage quickly with the default Python
 create-venv: ## setup virtual env for project in .venv if it does not exist
 	set -eux pipefail
 	if [ ! -d ".venv" ]; then \
-		export PIPENV_IGNORE_VIRTUALENVS=1, PIPENV_VENV_IN_PROJECT=1 && pipenv lock && pipenv sync --dev; \
+		export PIPENV_IGNORE_VIRTUALENVS=1, PIPENV_VENV_IN_PROJECT=1 && pipenv install --dev; \
 	fi
 
 setup: create-venv ## setup serverless (node) and create a .venv
@@ -84,10 +87,17 @@ deploy-model: ## deploy model to s3
 	./training/deploy_model.sh
 
 deploy: ## deploy serverless project to dev
-	./node_modules/serverless/bin/serverless deploy --stage=$(STAGE)
+	./node_modules/serverless/bin/serverless deploy --stage=$(STAGE) --profile=$(PROFILE)
 
 remove: ## remove the stack deployed with serverless
-	./node_modules/serverless/bin/serverless remove --stage=$(STAGE)
+	./node_modules/serverless/bin/serverless remove --stage=$(STAGE) --profile=$(PROFILE)
 
-bucket:
+bucket: ## creates S3 bucket
 	read -p "Enter bucket name: " BUCKET &&	aws s3api create-bucket --acl private --bucket $$BUCKET --create-bucket-configuration LocationConstraint=eu-central-1
+
+start-docker: ## Start docker-container to work with this project. Uses
+	export AWS_ACCESS_KEY_ID=$$(aws --profile $(PROFILE) configure get aws_access_key_id), \
+	AWS_SECRET_ACCESS_KEY=$$(aws --profile $(PROFILE) configure get aws_secret_access_key) && \
+	docker run --rm -ti -v $$(pwd):/workd -w /workd \
+		-e AWS_ACCESS_KEY_ID=$$AWS_ACCESS_KEY_ID \
+		-e AWS_SECRET_ACCESS_KEY=$$AWS_SECRET_ACCESS_KEY bweigel/ml_at_awslambda_pydatabln2018:latest /bin/bash

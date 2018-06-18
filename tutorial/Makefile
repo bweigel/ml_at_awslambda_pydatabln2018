@@ -87,10 +87,10 @@ deploy-model: ## deploy model to s3
 	./training/deploy_model.sh
 
 deploy: ## deploy serverless project to dev
-	./node_modules/serverless/bin/serverless deploy --stage=$(STAGE) --profile=$(AWS_PROFILE)
+	./node_modules/serverless/bin/serverless deploy --stage=$(STAGE)
 
 remove: ## remove the stack deployed with serverless
-	./node_modules/serverless/bin/serverless remove --stage=$(STAGE) --profile=$(AWS_PROFILE)
+	./node_modules/serverless/bin/serverless remove --stage=$(STAGE)
 
 bucket: ## creates S3 bucket
 	read -p "Enter bucket name: " BUCKET &&	aws s3api create-bucket --acl private --bucket $$BUCKET --create-bucket-configuration LocationConstraint=eu-central-1

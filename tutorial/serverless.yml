@@ -10,7 +10,7 @@ provider:
   runtime: python3.6
   region: eu-central-1
 
-  profile: ${opt:profile, "default"}
+  profile: ${opt:profile}
   role: DeployingMLtoLambdaRole
   memorySize: 256
   timeout: 10

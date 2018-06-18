@@ -1,7 +1,7 @@
 .PHONY: clean clean-test clean-pyc clean-build clean-tooling help
 .DEFAULT_GOAL := help
 STAGE=dev
-PROFILE=default
+AWS_PROFILE=default
 
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
@@ -87,17 +87,17 @@ deploy-model: ## deploy model to s3
 	./training/deploy_model.sh
 
 deploy: ## deploy serverless project to dev
-	./node_modules/serverless/bin/serverless deploy --stage=$(STAGE) --profile=$(PROFILE)
+	./node_modules/serverless/bin/serverless deploy --stage=$(STAGE) --profile=$(AWS_PROFILE)
 
 remove: ## remove the stack deployed with serverless
-	./node_modules/serverless/bin/serverless remove --stage=$(STAGE) --profile=$(PROFILE)
+	./node_modules/serverless/bin/serverless remove --stage=$(STAGE) --profile=$(AWS_PROFILE)
 
 bucket: ## creates S3 bucket
 	read -p "Enter bucket name: " BUCKET &&	aws s3api create-bucket --acl private --bucket $$BUCKET --create-bucket-configuration LocationConstraint=eu-central-1
 
 start-docker: ## Start docker-container to work with this project. Uses
-	export AWS_ACCESS_KEY_ID=$$(aws --profile $(PROFILE) configure get aws_access_key_id), \
-	AWS_SECRET_ACCESS_KEY=$$(aws --profile $(PROFILE) configure get aws_secret_access_key) && \
+	export AWS_ACCESS_KEY_ID=$$(aws --profile $(AWS_PROFILE) configure get aws_access_key_id), \
+	AWS_SECRET_ACCESS_KEY=$$(aws --profile $(AWS_PROFILE) configure get aws_secret_access_key) && \
 	docker run --rm -ti -v $$(pwd):/workd -w /workd \
 		-e AWS_ACCESS_KEY_ID=$$AWS_ACCESS_KEY_ID \
 		-e AWS_SECRET_ACCESS_KEY=$$AWS_SECRET_ACCESS_KEY bweigel/ml_at_awslambda_pydatabln2018:latest /bin/bash

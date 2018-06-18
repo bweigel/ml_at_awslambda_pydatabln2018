@@ -18,7 +18,7 @@ provider:
 
   ## TODO: Edit this to setup your deployment bucket
   deploymentBucket:
-    name: eigelbdemo
+    name: ep.dev.projects
 
   stackTags:
     service: ${ self:service }
@@ -32,10 +32,8 @@ package:
 
 custom:
   pythonRequirements:
-    dockerizePip: 'true'
+    dockerizePip: true
     fileName: Pipfile
-    dockerUsePipenv: true
-    dockerFile: Dockerfile
   git-repo: https://github.com/bweigel/ml_at_awslambda_pydatabln2018
 
 functions:

@@ -1,5 +1,7 @@
 # Deploying ML-models to AWS lambda - Workshop @ PyData Berlin 2018 (WIP)
 
+See https://bweigel.github.io/pydata_bln_2018/#/ for slides.
+
 ### What you will need (and should already have installed)
 
 - Python 3.6
@@ -8,7 +10,7 @@
 
 **PyData Attendees**, since I am not sure how well the internet will work on the Charité premises I urge you to 
 please install the above software and:
-- download the aws-lambda python 3.6 docker image: `docker pull lambci/lambda:build-python3.6`.
+- download the aws-lambda python 3.6 docker image: `docker pull bweigel/ml_at_awslambda_pydatabln2018`.
 - do items **1** to **4** in the **[Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart-minimal-devops-overhead)** below
 
 -----------------------------------------------------------------------------------
@@ -122,6 +124,40 @@ runtime environment (e.g. this docker image `lambci/lambda:build-python3.6`).
 3. remove `__pycache__` directories: `find . -type d -a -name '__pycache__' | xargs rm -rf`
 3. remove `*.py` files: `find . -type f -name '*.py' | xargs rm`
 
+## Troubleshooting
+
+1. `make test*` fails with `FileNotFoundError`:
+    ```bash
+    $ make test-all
+    set -eux pipefail
+    if [ ! -d ".venv" ]; then \
+            export PIPENV_IGNORE_VIRTUALENVS=1, PIPENV_VENV_IN_PROJECT=1 && pipenv lock && pipenv sync --dev; \
+    fi
+    pipenv run tox
+    Traceback (most recent call last):
+      File "/var/lang/bin/pipenv", line 11, in <module>
+        sys.exit(cli())
+      File "/var/lang/lib/python3.6/site-packages/pipenv/vendor/click/core.py", line 722, in __call__
+        return self.main(*args, **kwargs)
+      File "/var/lang/lib/python3.6/site-packages/pipenv/vendor/click/core.py", line 697, in main
+        rv = self.invoke(ctx)
+      File "/var/lang/lib/python3.6/site-packages/pipenv/vendor/click/core.py", line 1066, in invoke
+        return _process_result(sub_ctx.command.invoke(sub_ctx))
+      File "/var/lang/lib/python3.6/site-packages/pipenv/vendor/click/core.py", line 895, in invoke
+        return ctx.invoke(self.callback, **ctx.params)
+      File "/var/lang/lib/python3.6/site-packages/pipenv/vendor/click/core.py", line 535, in invoke
+        return callback(*args, **kwargs)
+      File "/var/lang/lib/python3.6/site-packages/pipenv/cli.py", line 637, in run
+        do_run(command=command, args=args, three=three, python=python)
+      File "/var/lang/lib/python3.6/site-packages/pipenv/core.py", line 2305, in do_run
+        do_run_posix(script, command=command)
+      File "/var/lang/lib/python3.6/site-packages/pipenv/core.py", line 2285, in do_run_posix
+        os.execl(command_path, command_path, *script.args)
+      File "/var/lang/lib/python3.6/os.py", line 527, in execl
+        execv(file, args)
+    FileNotFoundError: [Errno 2] No such file or directory
+    ```
+    - **Solution**: `make clean && make setup` then run `make test-all`
 
 ## Resources
 

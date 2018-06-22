@@ -1,7 +1,7 @@
 .PHONY: clean clean-test clean-pyc clean-build clean-tooling help
 .DEFAULT_GOAL := help
 STAGE=dev
-AWS_PROFILE=default
+PROFILE=default
 
 define BROWSER_PYSCRIPT
 import os, webbrowser, sys
@@ -96,8 +96,4 @@ bucket: ## creates S3 bucket
 	read -p "Enter bucket name: " BUCKET &&	aws s3api create-bucket --acl private --bucket $$BUCKET --create-bucket-configuration LocationConstraint=eu-central-1
 
 start-docker: ## Start docker-container to work with this project. Uses
-	export AWS_ACCESS_KEY_ID=$$(aws --profile $(AWS_PROFILE) configure get aws_access_key_id) \
-	AWS_SECRET_ACCESS_KEY=$$(aws --profile $(AWS_PROFILE) configure get aws_secret_access_key) && \
-	docker run --rm -ti -v $$(pwd):/workd -w /workd \
-		-e AWS_ACCESS_KEY_ID=$$AWS_ACCESS_KEY_ID \
-		-e AWS_SECRET_ACCESS_KEY=$$AWS_SECRET_ACCESS_KEY bweigel/ml_at_awslambda_pydatabln2018:latest /bin/bash
+	AWS_PROFILE=$(PROFILE) ./start_docker.sh

@@ -1,4 +1,3 @@
-import json
 from collections import namedtuple
 from io import BytesIO
 from typing import Tuple

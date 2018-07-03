@@ -1,7 +1,7 @@
 import json
 import os
 
-from categorizer_lambda.util import get_model, predict_from_event, create_response
+from categorizer_lambda.util import get_model, predict_from_event
 
 MODEL_BUCKET = os.environ.get("MODEL_BUCKET")
 VECTORIZER_PATH = os.environ.get("MODEL_VECTORIZER_PATH")

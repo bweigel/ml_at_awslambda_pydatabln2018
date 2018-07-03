@@ -1,3 +1,4 @@
+import json
 import os
 
 from categorizer_lambda.util import get_model, predict_from_event, create_response
@@ -11,4 +12,5 @@ MODEL = get_model(MODEL_BUCKET, (VECTORIZER_PATH, CLASSIFIER_PATH))
 
 def lambda_handler(event, context):
     result = predict_from_event(event, model=MODEL)
-    return create_response(result)
+    return {"body": json.dumps(result),
+            "statusCode": 200}

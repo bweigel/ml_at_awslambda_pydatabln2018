@@ -37,8 +37,3 @@ def predict(data: str, model: MyModel) -> list:
     vector = model.vectorizer.transform(text_array).toarray()
     prediction = model.classifier.predict(vector)
     return prediction.tolist()
-
-
-def create_response(result):
-    return {"body": json.dumps(result),
-            "statusCode": 200}

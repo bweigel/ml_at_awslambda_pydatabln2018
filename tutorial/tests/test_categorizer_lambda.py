@@ -27,7 +27,7 @@ def test_get_model(modelstorage):
 
 
 @pytest.mark.parametrize("input_data, expected", [
-    (["you know it is urgent and free", "Have you seen the news lately"], ["spam", "ham"]),
+    ("you know it is urgent and free", ["spam"]),
     ("bite me", ["ham"]),
     ("hello colleague. have a look at this", ["spam"])
 ])
@@ -36,12 +36,3 @@ def test_predict(model, input_data, expected):
     assert isinstance(result, list)
     assert expected == result
 
-
-@pytest.mark.parametrize("test_input", [
-    {"Have you seen the news lately", "abc"},
-    123,
-    {"abc": "def"}
-])
-def test_predict_throws_typeerrror(model, test_input):
-    with pytest.raises(TypeError):
-        predict(test_input, model)

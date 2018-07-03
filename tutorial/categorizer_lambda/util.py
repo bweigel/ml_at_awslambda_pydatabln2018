@@ -24,20 +24,12 @@ def get_model(bucket: str, object_keys: Tuple[str, str]) -> MyModel:
 
 
 def predict_from_event(event, model: MyModel) -> list:
-    data = get_input_data_from_event(event)
+    data = event["body"]
     return predict(data, model)
 
 
-def get_input_data_from_event(event):
-    data = event["body"]
-    return data
-
-
 def predict(data: str, model: MyModel) -> list:
-    if isinstance(data, str):
-        data = [data]
-    elif not isinstance(data, list):
-        raise TypeError("Wrong input!")
+    data = [data]
 
     print(f"Classifying {data}")
 

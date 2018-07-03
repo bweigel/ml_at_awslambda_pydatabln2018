@@ -8,6 +8,9 @@ RUN chmod --recursive 777 /tmp && groupadd -g 1000 lambdadev \
 
 RUN pip install pipenv pytest && pip install -U awscli
 
+COPY . /workd/
+RUN cd /workd && make clean && make setup
+
 USER lambdadev
 
 CMD ["/bin/bash"]

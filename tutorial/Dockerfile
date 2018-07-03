@@ -8,8 +8,9 @@ RUN chmod --recursive 777 /tmp && groupadd -g 1000 lambdadev \
 
 RUN pip install pipenv pytest && pip install -U awscli
 
-RUN mkdir /demo && chown lambdadev:lambdadev /demo
+RUN mkdir /demo
 COPY . /demo/
+RUN chown -R lambdadev:lambdadev /demo
 RUN cd /demo  && pipenv install --dev --system && pipenv install --system && npm install -g
 
 USER lambdadev

@@ -2,16 +2,17 @@
 
 See https://bweigel.github.io/pydata_bln_2018/#/ for slides & [Dockerhub](https://hub.docker.com/r/bweigel/ml_at_awslambda_pydatabln2018_autobuild/) for Docker images.
 
-### PyData Attendees: What you will need (and should already have installed)
+### PyData Attendees:
 
-- [Docker](https://www.docker.com/community-edition)
+**`<start importantInfo>`**
 
-Since I am not sure how well the internet will work on the Charité premises I urge you to 
-please install the above software and:
-- download the docker image we will be working with (this should contain everything you need): `docker pull bweigel/ml_at_awslambda_pydatabln2018_autobuild`
+Since I am not sure how well the internet will work on the Charité premises I urge you to:
+- install [Docker](https://www.docker.com/community-edition)
+- download the docker image we will be working with (this should contain everything you need to work along):
+    - `docker pull bweigel/ml_at_awslambda_pydatabln2018_autobuild`
 - do items **1** and **2** in the **[Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)**
 
------------------------------------------------------------------------------------
+**`<end importantInfo>`**
 
 ### Intro
 
@@ -35,6 +36,8 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 2. install and setup the [AWS Command Line Interface](https://aws.amazon.com/cli/)
     - `pip install awscli`
     - `aws configure` (see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html))
+3. start docker container: `cd tutorial` and `./start_docker.sh`
+4. work along merrily ... or,    
 
 
 ----------------------------------------------------------------------------------------------------

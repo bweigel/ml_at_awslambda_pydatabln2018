@@ -86,6 +86,12 @@ All the ML frameworks in Python are quite heavy weight when it comes to size. Ho
 wants to screw with you, but because it wants developers to build apps with the highest performance.
 There are a couple of tricks to reduce the size of your deployment zip-file. See [here](https://tech.europace.de/slimifying-aws-lambdas/) and the [resources section](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#resources) for more info.
 
+## FAQ
+
+**Why use the serverless framework (and not something like the AWS Serverless Application Model, SAM)?**
+The serverless framework is the most mature tooling around for deploying serverless services. It is actively developed, 
+has a big community and a rich ecosystem of plugins, which help with keeping our dependencies slim (see https://tech.europace.de/slimifying-aws-lambdas/) among other things.
+
 
 ## Troubleshooting
 
@@ -121,6 +127,19 @@ There are a couple of tricks to reduce the size of your deployment zip-file. See
     FileNotFoundError: [Errno 2] No such file or directory
     ```
     - **Solution**: `make clean && make setup` then run `make test-all`
+2. Error when running `serverless deploy`: 
+    ```bash
+    Serverless: Building custom docker image from Dockerfile...
+    
+    Error --------------------------------------------------
+    
+    Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+    ...
+
+    ```
+    - **Solution**: You are running serverless deploy inside a docker container and the serverless-requirements-plugin
+    tries to spawn another nested container to package dependecies.
+    Run deploy outside a docker container, or set `custom.pythonRequirements.dockerizePip` to `false` in the `serverless.yml`.    
 
 ## Resources
 

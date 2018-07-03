@@ -28,7 +28,7 @@ package:
 
 custom:
   pythonRequirements:
-    dockerizePip: 'true'
+    dockerizePip: true # set to false of serverless deploy is run in a docker container
     fileName: Pipfile
     slim: true
     dockerFile: Dockerfile

@@ -3,46 +3,40 @@ service:
 
 plugins:
   - serverless-python-requirements
-  - serverless-plugin-tracing
 
 provider:
   name: aws
   runtime: python3.6
   region: eu-central-1
-
-  profile: ${opt:profile}
-  role: DeployingMLtoLambdaRole
-  memorySize: 1024
-  timeout: 30
-  tracing: true
+  iamRoleStatements:
+    -  Effect: Allow
+       Action:
+         - s3:PutObject
+         - s3:GetObject
+       Resource:
+           - "arn:aws:s3:::${self:provider.deploymentBucket}/*"
 
   ## TODO: Edit this to setup your deployment bucket
   deploymentBucket:
     name: ep.dev.projects
 
-  stackTags:
-    service: ${ self:service }
-
 package:
-  # define here which folders and files you want to package (we only need ./categorizer_lambda for this demo)
   exclude:
     - '**/*'
   include:
     - 'categorizer_lambda/**'
 
 custom:
-  stage: ${ opt:stage, "dev" }
   pythonRequirements:
     dockerizePip: 'true'
     fileName: Pipfile
-    dockerUsePipenv: true
     slim: true
     dockerFile: Dockerfile
   git-repo: https://github.com/bweigel/ml_at_awslambda_pydatabln2018
 
 functions:
   categorizer_lambda:
-    name: categorizer_lambda_${ self:custom.stage }
+    name: categorizer_lambda
     description: >
       categorize texts into spam or ham using a naive Bayes classifier
     handler: categorizer_lambda.main.lambda_handler
@@ -55,45 +49,4 @@ functions:
       ## TODO: Edit these environmental variables to tell your code where the model is deployed (see ./categorizer_lambda/main.py)
       MODEL_VECTORIZER_PATH: pydatabln2018/tfidf_vectorizer.pkl
       MODEL_CLASSIFIER_PATH: pydatabln2018/naive_bayes_clf.pkl
-
-
-resources:
-  Resources:
-    DeployingMLtoLambdaRole:
-      Type: AWS::IAM::Role
-      Properties:
-        Path: /service/
-        RoleName: pydatabln2018-ws-ml-to-lambda_${ self:custom.stage }-role
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: Allow
-              Principal:
-                Service:
-                  - lambda.amazonaws.com
-              Action: sts:AssumeRole
-        Policies:
-          - PolicyName: pydatabln2018-ws-ml-to-lambda_${ self:custom.stage }-policy
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-                - Effect: Allow
-                  Action:
-                    - logs:CreateLogGroup
-                    - logs:CreateLogStream
-                    - logs:PutLogEvents
-                  Resource:
-                    - 'Fn::Join': [':', ['arn:aws:logs', Ref: 'AWS::Region', Ref: AWS::AccountId, 'log-group:/aws/lambda/*:*:*']]
-                - Effect: Allow
-                  Action:
-                    - "xray:PutTraceSegments"
-                    - "xray:PutTelemetryRecords"
-                  Resource:
-                    - "*"
-                -  Effect: Allow
-                   Action:
-                     - s3:PutObject
-                     - s3:GetObject
-                   Resource:
-                       - "arn:aws:s3:::${self:provider.deploymentBucket}/*"
 

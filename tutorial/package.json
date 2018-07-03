@@ -14,7 +14,6 @@
   "homepage": "https://github.com/bweigel/tutorial#readme",
   "devDependencies": {
     "serverless": "^1.27.3",
-    "serverless-plugin-tracing": "^2.0.0",
     "serverless-python-requirements": "^4.1.0"
   }
 }

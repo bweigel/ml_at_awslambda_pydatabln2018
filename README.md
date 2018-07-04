@@ -36,8 +36,10 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 2. install and setup the [AWS Command Line Interface](https://aws.amazon.com/cli/)
     - `pip install awscli`
     - `aws configure` (see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html))
-3. start docker container: `cd tutorial` and `./start_docker.sh`
-4. work along merrily ... or,    
+3. clone repo `git clone https://github.com/bweigel/ml_at_awslambda_pydatabln2018.git` 
+    - and change into the `tutorial` folder `cd ml_at_awslambda_pydatabln2018/tutorial`
+4. start docker container: `cd tutorial` and `./start_docker.sh`
+5. work along merrily ... or,    
 
 
 ----------------------------------------------------------------------------------------------------
@@ -46,7 +48,7 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 
 ### Steps (using the provided docker image)
 
-**1.-3.** see [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)
+**1.-4.** of [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart), then...
 
 Inside the container:
 ```
@@ -61,10 +63,7 @@ $ curl -X POST https://<see serverless output>.execute-api.eu-central-1.amazonaw
 ```
 ### Steps (using your machine)
  
-1. see [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)
-2. see [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)
-3. clone repo `git clone https://github.com/bweigel/ml_at_awslambda_pydatabln2018.git` 
-    - and change into the `tutorial` folder `cd ml_at_awslambda_pydatabln2018/tutorial`
+**1.-3.** of [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart), then...
 4. setup tooling with `make setup`. This installs:
     - virtualenv with dependencies defined in `Pipfile` using `pipenv` in `.venv`
     - the serverless framework and dependencies defined in `package.json` via `npm install` in `node_modules`    

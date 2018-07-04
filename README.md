@@ -49,13 +49,15 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 **1.-3.** see [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)
 
 Inside the container:
-```bash
-[lambdadev@f5a80d9a9ac2 workd]$ cd /demo
-[lambdadev@f5a80d9a9ac2 demo]$ vi serverless.yml
-                                ... see & edit TODOs in serverless.yml
-[lambdadev@f5a80d9a9ac2 demo]$ make setup && make deploy
-... serverless is deploying ...
-[lambdadev@f5a80d9a9ac2 demo]$ curl -X POST https://<see serverless output>.execute-api.eu-central-1.amazonaws.com/dev/spamorham -d "Am I spam or ham?"
+```
+$ cd /demo
+$ make deploy-model
+    # ... enter your S3-info when prompted
+$ vi serverless.yml
+    # ... see & edit TODOs in serverless.yml
+$ make setup && make deploy
+    # ... serverless is deploying ...
+$ curl -X POST https://<see serverless output>.execute-api.eu-central-1.amazonaws.com/dev/spamorham -d "Am I spam or ham?"
 ```
 ### Steps (using your machine)
  

@@ -64,6 +64,7 @@ $ curl -X POST https://<see serverless output>.execute-api.eu-central-1.amazonaw
 ### Steps (using your machine)
  
 **1.-3.** of [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart), then...
+
 4. setup tooling with `make setup`. This installs:
     - virtualenv with dependencies defined in `Pipfile` using `pipenv` in `.venv`
     - the serverless framework and dependencies defined in `package.json` via `npm install` in `node_modules`    

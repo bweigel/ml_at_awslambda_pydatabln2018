@@ -15,6 +15,5 @@ RUN cd /demo && sed -i -e 's/dockerizePip: true/dockerizePip: false/' serverless
 
 RUN chown -R lambdadev:lambdadev /demo
 USER lambdadev
-WORKDIR /workd
 
 CMD ["/bin/bash"]

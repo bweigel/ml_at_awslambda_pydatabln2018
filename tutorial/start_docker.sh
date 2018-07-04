@@ -9,4 +9,4 @@ export AWS_SECRET_ACCESS_KEY=$(aws --profile ${AWS_PROFILE} configure get aws_se
 
 docker run --rm -ti -v $(pwd)/from_scratch:/workd -w /workd \
     -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-    -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} bweigel/ml_at_awslambda_pydatabln2018:latest /bin/bash
+    -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} bweigel/ml_at_awslambda_pydatabln2018_autobuild:latest /bin/bash

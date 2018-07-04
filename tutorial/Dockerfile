@@ -10,9 +10,9 @@ RUN pip install pipenv pytest && pip install -U awscli
 
 RUN mkdir /demo
 COPY . /demo/
-RUN chown -R lambdadev:lambdadev /demo
-RUN cd /demo  && pipenv install --dev --system && pipenv install --system && npm install -g
+RUN cd /demo && sed -i -e 's/dockerizePip: true/dockerizePip: false/' serverless.yml && pipenv install --dev --system && pipenv install --system && npm install -g
 
+RUN chown -R lambdadev:lambdadev /demo
 USER lambdadev
 WORKDIR /workd
 

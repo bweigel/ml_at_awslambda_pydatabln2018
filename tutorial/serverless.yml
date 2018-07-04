@@ -8,6 +8,7 @@ provider:
   name: aws
   runtime: python3.6
   region: eu-central-1
+  stage: dev
   iamRoleStatements:
     -  Effect: Allow
        Action:
@@ -28,7 +29,7 @@ package:
 
 custom:
   pythonRequirements:
-    dockerizePip: true # set to false of serverless deploy is run in a docker container
+    dockerizePip: true # set to false if `serverless deploy` is run inside a docker container
     fileName: Pipfile
     slim: true
     dockerFile: Dockerfile

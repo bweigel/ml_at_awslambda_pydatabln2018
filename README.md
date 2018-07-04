@@ -10,7 +10,7 @@ Since I am not sure how well the internet will work on the Charité premises I u
 - install [Docker](https://www.docker.com/community-edition)
 - download the docker image we will be working with (this should contain everything you need to work along):
     - `docker pull bweigel/ml_at_awslambda_pydatabln2018_autobuild`
-- do items **1** and **2** in the **[Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)**
+- do items **1** to **3** in the **[Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)**
 
 **`<end importantInfo>`**
 

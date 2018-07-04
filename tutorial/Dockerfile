@@ -10,7 +10,7 @@ RUN pip install pipenv pytest && pip install -U awscli
 
 RUN mkdir /demo
 COPY . /demo/
-RUN cd /demo && sed -i -e 's/dockerizePip: true/dockerizePip: false/' serverless.yml && pipenv install --dev --system && pipenv install --system && npm install -g
+RUN cd /demo && sed -i -e 's/dockerizePip: true/dockerizePip: false/' serverless.yml && pipenv install --dev --system && pipenv install --system && npm install -g serverless serverless-python-requirements
 
 RUN chown -R lambdadev:lambdadev /demo
 USER lambdadev

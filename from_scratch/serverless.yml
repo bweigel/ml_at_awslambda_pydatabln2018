@@ -1,0 +1,32 @@
+service: pydata-workshop-2018-bwe
+
+plugins:
+  - serverless-python-requirements
+
+provider:
+  name: aws
+  runtime: python3.6
+  region: eu-central-1
+
+  deploymentBucket:
+    name: pydata.workshop.2018
+
+  iamRoleStatements:
+    -  Effect: Allow
+       Action:
+         - s3:PutObject
+         - s3:GetObject
+       Resource:
+         - "arn:aws:s3:::pydata.workshop.2018/*"
+
+custom:
+  pythonRequirements:
+    slim: true
+
+functions:
+  categorizer_lambda:
+    name: categorizer-lambda-bwe
+    description: this lambda classifies spam and ham
+    handler: main.lambda_handler
+    events:
+      - http: POST /spamorham

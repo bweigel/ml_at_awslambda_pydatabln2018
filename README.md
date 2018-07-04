@@ -37,8 +37,8 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
     - `pip install awscli`
     - `aws configure` (see [here](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html))
 3. clone repo `git clone https://github.com/bweigel/ml_at_awslambda_pydatabln2018.git` 
-    - and change into the `tutorial` folder `cd ml_at_awslambda_pydatabln2018/tutorial`
-4. start docker container: `cd tutorial` and `./start_docker.sh`
+    - and change into the project `cd ml_at_awslambda_pydatabln2018`
+4. start docker container: `./start_docker.sh`
 5. work along merrily ... or, if you feel adventurous check out the [complete demo code](DEMO.md)    
 
 

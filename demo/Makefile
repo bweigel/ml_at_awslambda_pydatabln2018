@@ -41,6 +41,7 @@ clean-tooling: ## removes node_modules and .venv
 
 clean-build: ## remove build artifacts
 	rm -fr build/
+	rm -rf .serverless/
 	rm -fr dist/
 	rm -fr .eggs/
 	find . \( -path ./env -o -path ./venv -o -path ./.env -o -path ./.venv \) -prune -o -name '*.egg-info' -exec rm -fr {} +
@@ -54,6 +55,7 @@ clean-pyc: ## remove Python file artifacts
 
 clean-test: ## remove test and coverage artifacts
 	rm -fr .tox/
+	rm -fr .cache/
 	rm -f .coverage
 	rm -fr htmlcov/
 	rm -fr .pytest_cache

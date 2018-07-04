@@ -30,7 +30,7 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 
 1. create an AWS account at [https://aws.amazon.com](https://aws.amazon.com) if you have not already done so (see [Instruction](https://aws.amazon.com/premiumsupport/knowledge-center/create-and-activate-aws-account/))
     - you will need a credit card to do this, but you __will not be charged__ if you stay in the [free tier](https://aws.amazon.com/free/)
-    - **BEWARE** the S3 capabilities, that we will be using, will only be free of charge for the first 12 months!
+    - **BEWARE** the S3 & ApiGateway capabilities, that we will be using, will only be free of charge for the first 12 months!
     - [create a new user within IAM](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html) (do not use root user to do stuff in your account and be sure to use MFA and a secure password)
     - [create an access key](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html#Using_CreateAccessKey) for programmatic access
 2. install and setup the [AWS Command Line Interface](https://aws.amazon.com/cli/)
@@ -44,7 +44,21 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 
 ## Try out the demo project
 
-### Steps
+### Steps (using the provided docker image)
+
+**1.-3.** see [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)
+
+Inside the container:
+```bash
+[lambdadev@f5a80d9a9ac2 workd]$ cd /demo
+[lambdadev@f5a80d9a9ac2 demo]$ vi serverless.yml
+                                ... see & edit TODOs in serverless.yml
+[lambdadev@f5a80d9a9ac2 demo]$ make setup && make deploy
+... serverless is deploying ...
+[lambdadev@f5a80d9a9ac2 demo]$ curl -X POST https://<see serverless output>.execute-api.eu-central-1.amazonaws.com/dev/spamorham -d "Am I spam or ham?"
+```
+### Steps (using your machine)
+ 
 1. see [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)
 2. see [Quickstart](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart)
 3. clone repo `git clone https://github.com/bweigel/ml_at_awslambda_pydatabln2018.git` 

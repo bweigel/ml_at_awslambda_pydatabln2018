@@ -9,7 +9,7 @@ from categorizer_lambda.util import get_model, MyModel, predict
 
 @pytest.fixture()
 def modelstorage():
-    return ("dreigelb.public", ("pydatabln2018/tfidf_vectorizer.pkl",
+    return ("ep.dev.projects", ("pydatabln2018/tfidf_vectorizer.pkl",
                                 "pydatabln2018/naive_bayes_clf.pkl"))
 
 

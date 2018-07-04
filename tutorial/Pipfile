@@ -10,6 +10,7 @@ pytest = "*"
 pytest-runner = "*"
 "boto3" = "*"
 wheel = "*"
+pandas = "*"
 
 [packages]
 sklearn = "*"

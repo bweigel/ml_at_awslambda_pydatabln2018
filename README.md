@@ -41,11 +41,11 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 4. start docker container: `./start_docker.sh`
 5. work along merrily ... or, if you feel adventurous check out the [complete demo code](DEMO.md)    
 
-<div style="background:#ffffff">
+** We will build this: **
+
 
 ![architecture](https://bweigel.github.io/pydata_bln_2018/images/architecture.svg)
 
-</div>
 
 ----------------------------------------------------------------------------------------------------
 

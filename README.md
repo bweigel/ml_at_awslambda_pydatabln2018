@@ -43,9 +43,12 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 
 ** We will build this: **
 
-
 ![architecture](https://bweigel.github.io/pydata_bln_2018/images/architecture.svg)
 
+Test lambda function locally:
+ ```
+ sls invoke local -f categorizer_lambda --data '{"body": "am i spam or am i ham?"}'
+ ```
 
 ----------------------------------------------------------------------------------------------------
 
@@ -58,6 +61,19 @@ wants to screw with you, but because it wants developers to build apps with the 
 There are a couple of tricks to reduce the size of your deployment zip-file. See [here](https://tech.europace.de/slimifying-aws-lambdas/) and the [resources section](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#resources) for more info.
 
 ## FAQ
+
+**How do I test my function?**
+You can test your function locally using serverless (only works when you have a valid `serverless.yml`):
+```
+sls invoke local -f categorizer_lambda --data '{"body": "am i spam or am i ham?"}'
+```
+This tries to emulate the lambda runtime environment and runs the function `categorizer_lambda` with the provided `--data` as the `event`.
+Testing like that isn't perfect, but should work fine for almost every usecase.
+For more info see [here](https://serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/).
+
+LPT: Unittests are always a great idea and easy to write and use.
+
+**How do I tear down my service stack?** To remove the service in AWS just run `serverless remove` inside the `from_scratch` directory.
 
 **Why use the serverless framework (and not something like the AWS Serverless Application Model, SAM)?**
 The serverless framework is the most mature tooling around for deploying serverless services. It is actively developed, 

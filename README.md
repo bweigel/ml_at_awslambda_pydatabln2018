@@ -41,6 +41,11 @@ The payloads will be forwarded to a AWS lambda function that knows the model and
 4. start docker container: `./start_docker.sh`
 5. work along merrily ... or, if you feel adventurous check out the [complete demo code](DEMO.md)    
 
+<div style="background:#ffffff">
+
+![architecture](https://bweigel.github.io/pydata_bln_2018/images/architecture.svg)
+
+</div>
 
 ----------------------------------------------------------------------------------------------------
 
@@ -58,6 +63,10 @@ There are a couple of tricks to reduce the size of your deployment zip-file. See
 The serverless framework is the most mature tooling around for deploying serverless services. It is actively developed, 
 has a big community and a rich ecosystem of plugins, which help with keeping our dependencies slim (see https://tech.europace.de/slimifying-aws-lambdas/) among other things.
 
+**What else is inside the `event` that is provided inside the `lambda_handler` function?** 
+Depending on the event type that triggers the function (e.g. SNS, SQS, Kinesis, Alexa...) the `event` payload will be different.
+We are using ApiGateway Proxy integration in this workshop. A sample proxy integration event can be seen [here](resources/apigateway_proxy_event_sample.json).
+You can see how the different events look through the AWS Lambda Console (go to `configure test event` and there will be a long list of events).
 
 ## Troubleshooting
 

@@ -78,7 +78,14 @@ You can also test like this (no need for a valid `serverless.yml`):
 python -c "import main; print(main.lambda_handler({'body': 'foo'}, None))"
 ```
 
-**How do I tear down my service stack?** To remove the service in AWS just run `serverless remove` inside the `from_scratch` directory.
+**How do I tear down my service stack?** 
+To remove the service in AWS just run `serverless remove` inside the `from_scratch` directory.
+
+**How to run `start_docker.sh` in Windows?**
+Download Git for Windows (https://gitforwindows.org/) and install it. It comes with the Git BASH which you can use to run `start_docker.sh`.
+*If you run into errors:* You might need to set some environmental variables before running the command. 
+Do `export AWS_ACCESS_KEY_ID=<your aws access key id> AWS_SECRET_ACCESS_KEY=<your aws secret ccess key>` (see [Quickstart 1.](https://github.com/bweigel/ml_at_awslambda_pydatabln2018#quickstart) on how to obtain these) and 
+run `./start_docker.sh` again.
 
 **Why use the serverless framework (and not something like the AWS Serverless Application Model, SAM)?**
 The serverless framework is the most mature tooling around for deploying serverless services. It is actively developed, 

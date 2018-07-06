@@ -73,6 +73,11 @@ For more info see [here](https://serverless.com/framework/docs/providers/aws/cli
 
 LPT: Unittests are always a great idea and easy to write and use.
 
+You can also test like this (no need for a valid `serverless.yml`):
+```bash
+python -c "import main; print(main.lambda_handler({'body': 'foo'}, None))"
+```
+
 **How do I tear down my service stack?** To remove the service in AWS just run `serverless remove` inside the `from_scratch` directory.
 
 **Why use the serverless framework (and not something like the AWS Serverless Application Model, SAM)?**

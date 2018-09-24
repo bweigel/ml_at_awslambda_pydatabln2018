@@ -1,5 +1,5 @@
 service:
-  name: pydatabln2018-ws-ml-to-lambda
+  name: lambda-performance
 
 plugins:
   - serverless-python-requirements
@@ -28,16 +28,27 @@ package:
     - 'categorizer_lambda/**'
 
 custom:
+  stage: ${opt:stage}
+  slimify:
+    slim:
+      slim: true
+      zip: false
+      fat: false
+    zip:
+      slim: false
+      zip: true
+      fat: false
   pythonRequirements:
     dockerizePip: true # set to false if `serverless deploy` is run inside a docker container
     fileName: Pipfile
-    slim: true
+    zip: ${ self:custom.slimify.zip.${ self:custom.stage } }
+    slim: ${ self:custom.slimify.slim.${ self:custom.stage } }
     dockerFile: Dockerfile
   git-repo: https://github.com/bweigel/ml_at_awslambda_pydatabln2018
 
 functions:
   categorizer_lambda:
-    name: categorizer_lambda
+    name: categorizer_lambda_${ self:custom.stage }
     description: >
       categorize texts into spam or ham using a naive Bayes classifier
     handler: categorizer_lambda.main.lambda_handler

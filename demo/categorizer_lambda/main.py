@@ -1,6 +1,11 @@
 import json
 import os
 
+try:
+  import unzip_requirements
+except ImportError:
+  pass
+
 from categorizer_lambda.util import get_model, predict_from_event
 
 MODEL_BUCKET = os.environ.get("MODEL_BUCKET")
